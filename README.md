@@ -71,6 +71,48 @@ course co-ordinator control all of this project.
 
 ![4](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/e2174e2f-4d09-4369-b3f1-919fe2fe38d6)
 
+    + Add class room:
+        - Here ,we express how to add class room. First write the room number of this classroom. Then select the room type.
+
+![5](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/39c6f444-6a7a-4d29-880e-12a2b56154b6)
+
+    + Schedule class Routine:
+             
+![6](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/af017605-9641-4054-b2c2-598bf3738603)
+
+        - When click the schedule class Routine, then open a window for select information.
+
+![7](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/18119f13-aae7-4f88-ac97-143cfce6c997)
+
+        - When click any class box, a pop window will comes.
+
+![8](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/8573472c-24f6-42ad-8063-300ab22b74c6)
+
+        - After click ‘schedule’ button, a class will scheduled.
+
+![9](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/754197b2-fbd3-4a1c-99a6-144106ce2548)
+
+        - In this same way, fill up the full class routine.
+
+![10](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/312ef90b-6453-4d43-9c8a-5fbd86e170eb)
+
+        - By clicking ‘save’ button, the routine will save.
+
+    + View Class Routine:
+        - After click download, a pdf file will generate.
+
+![11](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/b8b67d07-7922-42cc-8a98-18e35c753a8b)
+
+        - The PDF is:
+
+![12](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/f1da7f01-7cb0-4b58-9b00-accb89a74bd8)
+
+
+
+
+
+
+
 
 
 
