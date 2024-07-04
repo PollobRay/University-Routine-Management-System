@@ -48,4 +48,6 @@ Editor for Python programming language.
     : PyFPDF is a library that used to generate class routine as Portable Document Format(PDF) document.
 
 # Project Flow
+![1](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/5718c40c-df27-4413-a77e-ef43056acf52)
+
     
