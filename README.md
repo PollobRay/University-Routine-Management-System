@@ -50,4 +50,29 @@ Editor for Python programming language.
 # Project Flow
 ![1](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/5718c40c-df27-4413-a77e-ef43056acf52)
 
+
+# Project Overiew
+* <b>Main Window:</b>
+  - This is main window of the project. The main window consists three
+panel course coordinator panel, teachers panel, student panel.
+
+![2](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/6f0c5a25-b73f-4897-a2d2-1c9ad3ef3199)
+
+* <b>Course Co-ordinator Panel:</b>
+  - “Course co-ordinator panel” is the main panel in this project. The
+course co-ordinator control all of this project.
+
+![3](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/ae7f956f-e1c4-4c89-95ef-889c76febf6f)
+
+    + Add Course Teacher:
+    
+        ![4](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/639c52f3-6970-4a47-9904-76e01e1fe7dc)
+
+        Here, we showed the course coordinator how to add a course teacher.
+        First he write the name of the course teacher ,then select the
+        designation of the teacher. Then click the add button.
+
+
+
+
     
