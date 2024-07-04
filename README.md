@@ -65,12 +65,12 @@ course co-ordinator control all of this project.
 ![3](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/ae7f956f-e1c4-4c89-95ef-889c76febf6f)
 
     + Add Course Teacher:
-    
-        ![4](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/639c52f3-6970-4a47-9904-76e01e1fe7dc)
-
-        Here, we showed the course coordinator how to add a course teacher.
+        - Here, we showed the course coordinator how to add a course teacher.
         First he write the name of the course teacher ,then select the
         designation of the teacher. Then click the add button.
+
+        ![4](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/e2174e2f-4d09-4369-b3f1-919fe2fe38d6)
+
 
 
 
