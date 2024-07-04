@@ -69,7 +69,8 @@ course co-ordinator control all of this project.
         First he write the name of the course teacher ,then select the
         designation of the teacher. Then click the add button.
 
-        ![4](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/e2174e2f-4d09-4369-b3f1-919fe2fe38d6)
+![4](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/e2174e2f-4d09-4369-b3f1-919fe2fe38d6)
+
 
 
 
