@@ -64,19 +64,19 @@ course co-ordinator control all of this project.
 
 ![3](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/ae7f956f-e1c4-4c89-95ef-889c76febf6f)
 
-    + Add Course Teacher:
+    + <b>Add Course Teacher:</b>
         - Here, we showed the course coordinator how to add a course teacher.
         First he write the name of the course teacher ,then select the
         designation of the teacher. Then click the add button.
 
 ![4](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/e2174e2f-4d09-4369-b3f1-919fe2fe38d6)
 
-    + Add class room:
+    + <b>Add class room:</b>
         - Here ,we express how to add class room. First write the room number of this classroom. Then select the room type.
 
 ![5](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/39c6f444-6a7a-4d29-880e-12a2b56154b6)
 
-    + Schedule class Routine:
+    + <b>Schedule class Routine:</b>
              
 ![6](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/af017605-9641-4054-b2c2-598bf3738603)
 
@@ -98,7 +98,7 @@ course co-ordinator control all of this project.
 
         - By clicking ‘save’ button, the routine will save.
 
-    + View Class Routine:
+    + <b>View Class Routine:</b>
         - After click download, a pdf file will generate.
 
 ![11](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/b8b67d07-7922-42cc-8a98-18e35c753a8b)
@@ -106,6 +106,53 @@ course co-ordinator control all of this project.
         - The PDF is:
 
 ![12](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/f1da7f01-7cb0-4b58-9b00-accb89a74bd8)
+
+
+    + <b>View Teachers Class Schedule:</b>
+        - When click “View Teachers Class Schedule” ,then a window will
+        open and here select teacher name and click the view option. Then the
+        class schedule of that teacher will show.
+
+![13](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/71da7cd3-c6bc-464c-b7ab-d6c2f34561af)
+
+    +<b>View Class Room Status:</b>
+        - a window will
+        open and here select class room/ lab and click the view option. Then the
+         schedule of that class room/ lab will show.
+        
+![14](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/64277f42-9eb1-4584-83de-c64a06f53924)
+
+*<b>Teachers Panel:</b>
+    
+![15](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/d3542271-cb46-43d9-890b-367ce306395e)
+
+    +<b>Schedule Class Test Routine:</b>
+    
+![16](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/7a3d0f32-708f-4d62-baec-78e6daff9942)
+
+    - After clicking date box, we can easily select date.
+    - Here a teacher can schedule class test routine.
+
+![17](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/c986fd05-7223-4506-b39d-7bf67082a309)
+
+    +<b>View Class Test Routine:</b>
+        - When click the “View Class Test Routine” , then the class test
+        scheduled routine will show.
+        
+![18](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/f8fbaafb-d4a7-459f-9a12-dd57371475e6)
+
+*<b>Student Panel:</b>
+    - From student panel, a student can view class routine, download class
+        routine and view class test routine.
+        
+![19](https://github.com/PollobRay/University-Routine-Management-System/assets/96225924/436551e3-2d24-43a3-8273-eadcbf24660e)
+
+
+
+    
+    
+
+
 
 
 
