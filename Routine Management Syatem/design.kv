@@ -1,0 +1,3917 @@
+
+<Notification>
+    MDRectangleFlatButton:
+        text:'OK'
+        text_color:"#e7040e"
+        on_release:
+            root.dismiss()
+
+
+#popup window
+<PopWidget>
+    title:"Schedule class"
+    size_hint:None, None
+    size:400, 400
+    title_align : 'center'
+    title_color : '#d82f05'
+    title_size : '26sp'
+
+    GridLayout:
+        cols:1
+        GridLayout:
+            cols:2
+            Label:
+                text:'Course Code :'
+            TextInput:
+                id:courseCode
+                text:root.getCourseCode() #initialized
+
+        GridLayout:
+            cols:2
+            Label:
+                text:'Course Title :'
+            TextInput:
+                id:courseName
+                text:root.getCourseName() #initialized by if before filled values
+
+        GridLayout:
+            cols:2
+            Label:
+                text:'Course Teacher :'
+            Spinner:
+                id:teachers1
+                text:root.getTeacherName1()
+                values:root.getTeacherList()
+                on_text: root.spinnerEvent1()
+
+        #Teacher 2
+        GridLayout:
+            cols:2
+            Label:
+                text:'Course Teacher 2 :'
+                disabled: not Select.active
+            Spinner:
+                id:teachers2
+                text:root.getTeacherName2()
+                values:root.getTeacherList()
+                disabled: not Select.active
+                on_text: root.spinnerEvent2()
+
+        GridLayout:
+            cols:2
+            Label:
+                text:'Select ClassRoom :'
+
+            Spinner:
+                id:rooms
+                text:root.getRoomNo()
+                values:root.getRoomList() #['7019 A','7019 B']
+                on_text: root.spinnerEvent3()
+
+        GridLayout:
+            cols:4
+            Label:
+                text:''
+            CheckBox:
+                id:Select
+                active: root.isLab()
+
+            Label:
+                text:'Lab Class'
+
+            Label:
+                text:''
+
+        GridLayout:
+            cols:3
+            Button:
+                id: sdlBtn
+                text:'Schedule'
+                on_release:root.press_btn()
+
+            Label:
+                text:''
+
+            Button:
+                text:'close'
+                on_release:root.dismiss()
+
+WindowManager:
+	MainWindow:
+	MakeRutineWindow:
+	ViewRutineWindow:
+	CourseCoordinator:
+	StudentPanel:
+	SelectInformationStd:
+	SelectInformationStdView: #to view routine
+    SelectInformationStdUpd: # to update routine
+    UpdateRoutineWindow:
+    DeleteRoutineWindow: # to delete routine
+    AddTeacher: #to add teacher
+    AddClassRoom:
+    ViewTeacherScedule:
+    ViewRoomStatus:
+
+    TeachersPanel: #teacher's panel
+    MakeCTSchedule:
+    ViewCTScheduled:
+
+#main window panel
+<MainWindow>:
+	name: "main"
+
+	MDBoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+        #header
+        MDGridLayout:
+		    cols:2
+		    spacing:10
+		    MDGridLayout:
+		        cols:1
+		        size_hint_x:None
+		        width:300
+		        padding:0
+		        MDGridLayout:
+		            cols:2
+		            Label:
+		                text:''
+                    Image:
+                        source:'File\\Image\\DUET.png'
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: 150 #self.parent.width
+                        height: 150/self.image_ratio
+                        pos_hint_y:0.2
+                Label:
+                    text:''
+		    MDGridLayout:
+		        cols:1
+		        size_hint_y:None
+		        height:self.minimum_height+150
+		        MDLabel:
+		            text:'Dhaka University of Engineering & Technology, Gazipur'
+		            font_size:40
+		        MDLabel:
+		            text:'Department of Computer Science and Engineering'
+		            font_size:35
+
+		Label:
+		    text:''
+
+		MDLabel:
+			text: "Routine Management System"
+			font_size: 80
+			halign: "center"
+			color:'#ff3333'
+
+        MDGridLayout:
+            cols:3
+
+            spacing:50
+            padding:100
+
+            MDRectangleFlatButton:
+                text:'Course Coordinator Panel'
+                size_hint_x:0.3
+                font_size:28
+                on_release:
+                    app.root.current = "courseCo"
+			        root.manager.transition.direction = "right"
+
+            MDRectangleFlatButton:
+                text:'Teachers Panel'
+                size_hint_x:0.3
+                font_size:28
+                on_release:
+                    app.root.current = "teachersP"
+			        root.manager.transition.direction = "right"
+
+            MDRectangleFlatButton:
+                text:'Student Panel'
+                size_hint_x:0.3
+                font_size:28
+                on_release:
+                    app.root.current = "stdpanel"
+			        root.manager.transition.direction = "left"
+
+		Label:
+		    text:''
+
+
+
+#Student panel
+<StudentPanel>
+    name:'stdpanel'
+    MDBoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Student Panel"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+        MDLabel:
+            text:' '
+
+
+        MDGridLayout:
+            cols:2
+            size_hint:0.7,0.5
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            spacing:50
+
+            MDRectangleFlatButton:
+                text:'View Class Routine'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = "selectInfoView"
+			        root.manager.transition.direction = "left"
+
+			MDRectangleFlatButton:
+                text:'View Class Test Routine'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = 'vctschedule'
+                    root.manager.transition.direction = "right"
+
+        MDLabel:
+            text:' '
+
+#course coordinator panel
+<CourseCoordinator>
+    name:'courseCo'
+
+    MDBoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Course Coordinator Panel"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+        MDLabel:
+            text:' '
+
+
+        MDGridLayout:
+            cols:2
+            size_hint:0.7,0.5
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            spacing:50
+
+            MDRectangleFlatButton:
+                text:'Add Course Teacher'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = "ateacher" # add teacher
+			        root.manager.transition.direction = "right"
+
+
+			MDRectangleFlatButton:
+                text:'Schedule class Routine'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = "selectInfo" # mroutine
+			        root.manager.transition.direction = "right"
+
+			MDRectangleFlatButton:
+                text:'View Teacher Class Schedule'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.loadTeacherClassSchedule()
+                    #app.root.current = 'vtroutine'
+                    #root.manager.transition.direction = 'left'
+            MDRectangleFlatButton:
+                text:'View Class Routine'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = "selectInfoView"
+			        root.manager.transition.direction = "left"
+
+			MDRectangleFlatButton:
+                text:'Add Class Room'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = 'aroom'
+                    root.manager.transition.direction = 'left'
+
+            MDRectangleFlatButton:
+                text:'Update Class Routine'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = 'selectInfoUpd'
+                    root.manager.transition.direction = 'left'
+
+			MDRectangleFlatButton:
+                text:'View Class Room Status'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.loadClassRoomStatus()
+                    #app.root.current = "vcroutine" # mroutine
+			        #root.manager.transition.direction = "right"
+
+            MDRectangleFlatButton:
+                text:'Delete Class Routine'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = 'droutine'
+                    root.manager.transition.direction = 'left'
+
+
+
+
+
+
+        Label:
+            text:' '
+        Label:
+            text:''
+
+#Select information for which routine is making
+<SelectInformationStd>
+    name:'selectInfo'
+    MDBoxLayout:
+        orientation: "vertical"
+		size: root.width, root.height
+
+        #header
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Select information"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+
+        #Dummy to make space
+        MDGridLayout:
+            cols:1
+            padding:100
+            MDLabel:
+                text:""
+
+        #content
+        MDGridLayout:
+            cols:2
+            size_hint:0.7,0.5
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            spacing:50
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Year :'
+                    font_size:25
+                Spinner:
+                    id:year
+                    text:'Select'
+                    font_size:25
+                    values:['1st','2nd','3rd','4th']
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Semester :'
+                    font_size:25
+                Spinner:
+                    id:sem
+                    text:'Select'
+                    font_size:25
+                    values:['1st','2nd']
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Section :'
+                    font_size:25
+                Spinner:
+                    id:sec
+                    text:'Select'
+                    font_size:25
+                    values:['A','B']
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+            padding:50
+
+            MDLabel:
+                text:''
+            MDRectangleFlatButton:
+                text:'Select'
+                #font_size:32
+                on_release:
+		            app.loadMakeWindow(root.ids.year.text,root.ids.sem.text,root.ids.sec.text,'left')
+            MDLabel:
+                text: ""
+
+        #dummy
+        MDGridLayout:
+            cols:1
+            size_hint_y: None
+            height: self.minimum_height
+            padding:50
+            MDLabel:
+                text:' '
+
+
+
+
+
+<MakeRutineWindow>:
+	name: "mroutine"
+
+    #container
+	MDBoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+        #header layout
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+            MDLabel:
+                text: "Schedule class Routine"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+            MDRectangleFlatButton:
+                text:'Save'
+                font_size:32
+                on_press:
+                    root.saveButtonEvent()
+                    #print(app.page)
+
+
+        #main layout
+        MDGridLayout: #inside Routine
+            cols: 5
+
+            #1
+            MDGridLayout:
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+150
+                MDLabel: #dummy
+                    text: " "
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel: #sunday label
+                    text: "Sunday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel:#monday label
+                    text: "Monday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Tuesday label
+                    text: "Tuesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Wednesday label
+                    text: "Wednesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel: #Thursday label
+                    text: "Thursday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+            #2
+            MDGridLayout: #before tea break
+                cols:3
+                # 2 --1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.00 - 8.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun1
+                        #halign:'center'
+                        multiline:True
+                        hint_text:'Sunday \n8.00 - 8.30 AM'
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #disabled:True
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun1,'sun1','sunday','08:00 - 08:30 Am')
+
+                    MDTextFieldRect:
+                        id:mon1
+                        hint_text: "Monday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #text_color:'#ac0bc2'
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon1,'mon1','monday','08:00 - 08:30 Am')
+
+
+                    MDTextFieldRect:
+                        id:tue1
+                        hint_text: "Tuesday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue1,'tue1','tuesday','08:00 - 08:30 Am')
+
+                    MDTextFieldRect:
+                        id:wed1
+                        hint_text: "Wednesday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed1,'wed1','wednesday','08:00 - 08:30 Am')
+
+                    MDTextFieldRect:
+                        id:tues1
+                        hint_text: "Thursday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues1,'tues1','thursday','08:00 - 08:30 Am')
+                # 2-- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.30 - 9.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun2
+                        hint_text: "Sunday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun2,'','sunday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:mon2
+                        hint_text: "Monday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon2,'','monday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:tue2
+                        hint_text: "Tuesday \n8.30 - 9.30 AMm"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue2,'','tuesday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:wed2
+                        hint_text: "Wednesday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed2,'','wednesday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:tues2
+                        hint_text: "Thursday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues2,'','thursday','08:30 - 09:30 Am')
+
+                # 2 -- 3
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "9.30 - 10.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun3
+                        hint_text: "Sunday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun3,'','sunday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:mon3
+                        hint_text: "Monday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon3,'','monday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:tue3
+                        hint_text: "Tuesday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue3,'','tuesday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:wed3
+                        hint_text: "Wednesday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed3,'','wednesday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:tues3
+                        hint_text: "Thursday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues3,'','thursday','09:30 - 10:30 Am')
+           #end
+
+            # 3
+            MDGridLayout:#after tea break
+                cols:4
+
+                #Tea Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\nT\ne\na\n\n B\nr\ne\na\nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+                # 3 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "10.45 - 11.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun4
+                        hint_text: "Sunday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun4,'','sunday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:mon4
+                        hint_text: "Monday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon4,'','monday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:tue4
+                        hint_text: "Tuesday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue4,'','tuesday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:wed4
+                        hint_text: "Wednesday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed4,'','wednesday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:tues4
+                        hint_text: "Thursday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues4,'','thursday','10:45 - 11:45 Am')
+                #3 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "11.45 - 12.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun5
+                        hint_text: "Sunday \n11.45 - 12.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun5,'','sunday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:mon5
+                        hint_text: "Monday \n11.45 - 12.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon5,'','monday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tue5
+                        hint_text: "Tuesday \n11.45 - 12.45 Pm"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue5,'','tuesday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:wed5
+                        hint_text: "Wednesday \n11.45 - 12.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed5,'','wednesday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tues5
+                        hint_text: "Thursday \n11.45 - 12.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues5,'','thursday','11:45 - 12:45 Pm')
+
+                #Launch Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\n\nL\na\nu\nn\nc\nh \n \nB\nr\ne\na \nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+            # 4
+            MDGridLayout: #after launch break
+                cols:3
+                # 4 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing: 5
+                    padding:2.5
+                    MDLabel:
+                        text: "1.45 - 2.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun6
+                        hint_text: "Sunday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun6,'sun6','sunday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:mon6
+                        hint_text: "Monday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon6,'mon6','monday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tue6
+                        hint_text: "Tuesday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue6,'tue6','tuesday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:wed6
+                        hint_text: "Wednesday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed6,'wed6','wednesday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tues6
+                        hint_text: "Thursday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues6,'tues6','thursday','01:45 -02:45 Pm')
+
+                # 4 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "2.45 - 3.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun7
+                        hint_text: "Sunday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun7,'','sunday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:mon7
+                        hint_text: "Monday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon7,'','monday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tue7
+                        hint_text: "Tuesday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue7,'','tuesday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:wed7
+                        hint_text: "Wednesday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed7,'','wednesday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tues7
+                        hint_text: "Thursday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues7,'','thursday','02:45 - 03:45 Pm')
+
+                # 4 -- 3
+                GridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "3.45 - 4.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun8
+                        hint_text: "Sunday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun8,'','sunday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:mon8
+                        hint_text: "Monday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon8,'','monday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:tue8
+                        hint_text: "Tuesday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue8,'','tuesday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:wed8
+                        hint_text: "Wednesday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed8,'','wednesday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:tues8
+                        hint_text: "Thursday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues8,'','thursday','03:45 - 04:30 Pm')
+
+            #5
+            MDGridLayout: #dummy to right
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+50
+        #footer layout
+        MDGridLayout:
+            rows:1
+            size_hint_y: None
+            height: self.minimum_height+50
+
+#select information to view routine
+<SelectInformationStdView>
+    name:'selectInfoView'
+    MDBoxLayout:
+        orientation: "vertical"
+		size: root.width, root.height
+
+        #header
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Select information to View Routine"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+
+        #Dummy to make space
+        MDGridLayout:
+            cols:1
+            padding:100
+            MDLabel:
+                text:""
+
+        #content
+        MDGridLayout:
+            cols:2
+            size_hint:0.7,0.5
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            spacing:50
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Year :'
+                    font_size:25
+                Spinner:
+                    id:year
+                    text:'Select'
+                    font_size:25
+                    values:['1st','2nd','3rd','4th']
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Semester :'
+                    font_size:25
+                Spinner:
+                    id:sem
+                    text:'Select'
+                    values:['1st','2nd']
+                    font_size:25
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Section :'
+                    font_size:25
+                Spinner:
+                    id:sec
+                    text:'Select'
+                    font_size:25
+                    values:['A','B']
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+            padding:50
+
+            MDLabel:
+                text:''
+            MDRectangleFlatButton:
+                text:'Select'
+                #font_size:32
+                on_release:
+		            app.loadRoutine(root.ids.year.text,root.ids.sem.text,root.ids.sec.text,'left')
+            MDLabel:
+                text: ""
+
+        #dummy
+        MDGridLayout:
+            cols:1
+            size_hint_y: None
+            height: self.minimum_height
+            padding:50
+            MDLabel:
+                text:' '
+
+
+
+
+
+<ViewRutineWindow>
+    name: "vroutine"
+    #container
+    MDBoxLayout:
+	    orientation: "vertical"
+	    size: root.width, root.height
+
+        #header
+        MDGridLayout:
+            cols:3
+            size_hint_y:None
+            height:self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                font_size:32
+                valign:'center'
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "right"
+
+            MDLabel:
+                text: "View Routine"
+                font_size: 32
+                halign:'center'
+                color:'#ff3333'
+
+            MDRectangleFlatButton:
+                text:'Download'
+                font_size:32
+                on_release:root.download()
+
+
+        #main layout
+        MDGridLayout: #inside Routine
+            cols: 5
+
+            #1
+            MDGridLayout:
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+150
+                MDLabel: #dummy
+                    text: " "
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel: #sunday label
+                    text: "Sunday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel:#monday label
+                    text: "Monday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Tuesday label
+                    text: "Tuesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Wednesday label
+                    text: "Wednesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel: #Thursday label
+                    text: "Thursday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+            #2
+            MDGridLayout: #before tea break
+                cols:3
+                # 2 --1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.00 - 8.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun11
+                        #halign:'center'
+                        multiline:True
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #disabled:True
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #text_color:'#ac0bc2'
+                        readonly:True
+
+
+                    MDTextFieldRect:
+                        id:tue11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 2-- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.30 - 9.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 2 -- 3
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "9.30 - 10.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+           #end
+
+            # 3
+            MDGridLayout:#after tea break
+                cols:4
+
+                #Tea Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\nT\ne\na\n\n B\nr\ne\na\nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+                # 3 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "10.45 - 11.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                #3 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "11.45 - 12.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                #Launch Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\n\nL\na\nu\nn\nc\nh \n \nB\nr\ne\na \nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+            # 4
+            MDGridLayout: #after launch break
+                cols:3
+                # 4 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing: 5
+                    padding:2.5
+                    MDLabel:
+                        text: "1.45 - 2.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 4 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "2.45 - 3.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 4 -- 3
+                GridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "3.45 - 4.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+            #5
+            MDGridLayout: #dummy to right
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+50
+        #footer layout
+        MDGridLayout:
+            rows:1
+            size_hint_y: None
+            height: self.minimum_height+50
+
+#update Routine information selection
+<SelectInformationStdUpd>
+    name:'selectInfoUpd'
+    MDBoxLayout:
+        orientation: "vertical"
+		size: root.width, root.height
+
+        #header
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Select information to Update Routine"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+
+        #Dummy to make space
+        MDGridLayout:
+            cols:1
+            padding:100
+            MDLabel:
+                text:""
+
+        #content
+        MDGridLayout:
+            cols:2
+            size_hint:0.7,0.5
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            spacing:50
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Year :'
+                    font_size:25
+                Spinner:
+                    id:year
+                    text:'Select'
+                    values:['1st','2nd','3rd','4th']
+                    font_size:25
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Semester :'
+                    font_size:25
+                Spinner:
+                    id:sem
+                    text:'Select'
+                    values:['1st','2nd']
+                    font_size:25
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Section :'
+                    font_size:25
+                Spinner:
+                    id:sec
+                    text:'Select'
+                    values:['A','B']
+                    font_size:25
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+            padding:50
+
+            MDLabel:
+                text:''
+            MDRectangleFlatButton:
+                text:'Select'
+                #font_size:32
+                on_release:
+		            app.updateRoutine(root.ids.year.text,root.ids.sem.text,root.ids.sec.text,'left')
+            MDLabel:
+                text: ""
+
+        #dummy
+        MDGridLayout:
+            cols:1
+            size_hint_y: None
+            height: self.minimum_height
+            padding:50
+            MDLabel:
+                text:' '
+
+
+#update window
+<UpdateRoutineWindow>
+    name: "uproutine"
+
+    #container
+	MDBoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+        #header layout
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+            MDLabel:
+                text: "Update class Routine"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+            MDRectangleFlatButton:
+                text:'Save'
+                font_size:32
+                on_press:
+                    root.saveButtonEvent()
+                    #print(app.page)
+
+
+        #main layout
+        MDGridLayout: #inside Routine
+            cols: 5
+
+            #1
+            MDGridLayout:
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+150
+                MDLabel: #dummy
+                    text: " "
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel: #sunday label
+                    text: "Sunday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel:#monday label
+                    text: "Monday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Tuesday label
+                    text: "Tuesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Wednesday label
+                    text: "Wednesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel: #Thursday label
+                    text: "Thursday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+            #2
+            MDGridLayout: #before tea break
+                cols:3
+                # 2 --1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.00 - 8.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun1
+                        #halign:'center'
+                        multiline:True
+                        hint_text:'Sunday \n8.00 - 8.30 AM'
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #disabled:True
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun1,'sun1','sunday','08:00 - 08:30 Am')
+
+                    MDTextFieldRect:
+                        id:mon1
+                        hint_text: "Monday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #text_color:'#ac0bc2'
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon1,'mon1','monday','08:00 - 08:30 Am')
+
+
+                    MDTextFieldRect:
+                        id:tue1
+                        hint_text: "Tuesday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue1,'tue1','tuesday','08:00 - 08:30 Am')
+
+                    MDTextFieldRect:
+                        id:wed1
+                        hint_text: "Wednesday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed1,'wed1','wednesday','08:00 - 08:30 Am')
+
+                    MDTextFieldRect:
+                        id:tues1
+                        hint_text: "Tuesday \n8.00 - 8.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues1,'tues1','thursday','08:00 - 08:30 Am')
+                # 2-- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.30 - 9.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun2
+                        hint_text: "Sunday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun2,'','sunday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:mon2
+                        hint_text: "Monday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon2,'','monday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:tue2
+                        hint_text: "Tuesday \n8.30 - 9.30 AMm"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue2,'','tuesday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:wed2
+                        hint_text: "Wednesday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed2,'','wednesday','08:30 - 09:30 Am')
+
+                    MDTextFieldRect:
+                        id:tues2
+                        hint_text: "Thursday \n8.30 - 9.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues2,'','thursday','08:30 - 09:30 Am')
+
+                # 2 -- 3
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "9.30 - 10.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun3
+                        hint_text: "Sunday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun3,'','sunday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:mon3
+                        hint_text: "Monday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon3,'','monday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:tue3
+                        hint_text: "Tuesday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue3,'','tuesday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:wed3
+                        hint_text: "Wednesday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed3,'','wednesday','09:30 - 10:30 Am')
+
+                    MDTextFieldRect:
+                        id:tues3
+                        hint_text: "Thursday \n9.30 - 10.30 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues3,'','thursday','09:30 - 10:30 Am')
+           #end
+
+            # 3
+            MDGridLayout:#after tea break
+                cols:4
+
+                #Tea Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\nT\ne\na\n\n B\nr\ne\na\nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+                # 3 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "10.45 - 11.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun4
+                        hint_text: "Sunday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun4,'','sunday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:mon4
+                        hint_text: "Monday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon4,'','monday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:tue4
+                        hint_text: "Tuesday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue4,'','tuesday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:wed4
+                        hint_text: "Wednesday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed4,'','wednesday','10:45 - 11:45 Am')
+
+                    MDTextFieldRect:
+                        id:tues4
+                        hint_text: "Thursday \n10.45 - 11.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues4,'','thursday','10:45 - 11:45 Am')
+                #3 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "11.45 - 12.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun5
+                        hint_text: "Sunday \n11.45 - 12.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun5,'','sunday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:mon5
+                        hint_text: "Monday \n11.45 - 12.45 AM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon5,'','monday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tue5
+                        hint_text: "Tuesday \n11.45 - 12.45 Pm"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue5,'','tuesday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:wed5
+                        hint_text: "Wednesday \n11.45 - 12.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed5,'','wednesday','11:45 - 12:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tues5
+                        hint_text: "Thursday \n11.45 - 12.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues5,'','thursday','11:45 - 12:45 Pm')
+
+                #Launch Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\n\nL\na\nu\nn\nc\nh \n \nB\nr\ne\na \nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+            # 4
+            MDGridLayout: #after launch break
+                cols:3
+                # 4 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing: 5
+                    padding:2.5
+                    MDLabel:
+                        text: "1.45 - 2.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun6
+                        hint_text: "Sunday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun6,'sun6','sunday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:mon6
+                        hint_text: "Monday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon6,'mon6','monday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tue6
+                        hint_text: "Tuesday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue6,'tue6','tuesday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:wed6
+                        hint_text: "Wednesday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed6,'wed6','wednesday','01:45 -02:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tues6
+                        hint_text: "Tuesday \n1.45 - 2.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues6,'tues6','thursday','01:45 -02:45 Pm')
+
+                # 4 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "2.45 - 3.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun7
+                        hint_text: "Sunday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun7,'','sunday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:mon7
+                        hint_text: "Monday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon7,'','monday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tue7
+                        hint_text: "Tuesday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue7,'','tuesday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:wed7
+                        hint_text: "Wednesday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed7,'','wednesday','02:45 - 03:45 Pm')
+
+                    MDTextFieldRect:
+                        id:tues7
+                        hint_text: "Tuesday \n2.45 - 3.45 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues7,'','thursday','02:45 - 03:45 Pm')
+
+                # 4 -- 3
+                GridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "3.45 - 4.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun8
+                        hint_text: "Sunday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.sun8,'','sunday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:mon8
+                        hint_text: "Monday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.mon8,'','monday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:tue8
+                        hint_text: "Tuesday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tue8,'','tuesday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:wed8
+                        hint_text: "Wednesday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.wed8,'','wednesday','03:45 - 04:30 Pm')
+
+                    MDTextFieldRect:
+                        id:tues8
+                        hint_text: "Tuesday \n3.45 - 4.30 PM"
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+                        on_double_tap:root.set_class(root.ids.tues8,'','thursday','03:45 - 04:30 Pm')
+
+            #5
+            MDGridLayout: #dummy to right
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+50
+        #footer layout
+        MDGridLayout:
+            rows:1
+            size_hint_y: None
+            height: self.minimum_height+50
+
+
+<DeleteRoutineWindow>
+    name:'droutine'
+    MDBoxLayout:
+        orientation: "vertical"
+		size: root.width, root.height
+
+        #header
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Select information to delete Routine"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+
+        #Dummy to make space
+        MDGridLayout:
+            cols:1
+            padding:100
+            MDLabel:
+                text:""
+
+        #content
+        MDGridLayout:
+            cols:2
+            size_hint:0.7,0.5
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            spacing:50
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Year :'
+                    font_size:25
+                Spinner:
+                    id:year
+                    text:'Select'
+                    values:['1st','2nd','3rd','4th']
+                    font_size:25
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Semester :'
+                    font_size:25
+                Spinner:
+                    id:sem
+                    text:'Select'
+                    values:['1st','2nd']
+                    font_size:25
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:'Section :'
+                    font_size:25
+                Spinner:
+                    id:sec
+                    text:'Select'
+                    values:['A','B']
+                    font_size:25
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing:50
+            padding:50
+
+            MDLabel:
+                text:''
+            MDRectangleFlatButton:
+                text:'Delete'
+                #font_size:32
+                on_release:
+		            root.deleteRoutine(root.ids.year.text,root.ids.sem.text,root.ids.sec.text)
+            MDLabel:
+                text: ""
+
+        #dummy
+        MDGridLayout:
+            cols:1
+            size_hint_y: None
+            height: self.minimum_height
+            padding:50
+            MDLabel:
+                text:' '
+
+
+<AddTeacher>
+    name:'ateacher'
+    MDGridLayout:
+        cols:1
+		size: root.width, root.height
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Add Course Teacher"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+        MDGridLayout:
+            cols:1
+        MDGridLayout:
+            cols:1
+            padding:200
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            size_hint_y: None
+            height: self.minimum_height+200
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:"Teacher Name :"
+                    font_size:25
+                MDTextFieldRect:
+                    id:teacherName
+                    text:''
+                    font_size:25
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:"Designation :"
+                    font_size:25
+                Spinner:
+                    text:''
+                    font_size:25
+                    values:['Professor',' Associate Professor',' Assistant Professor',' Lecturer']
+            MDGridLayout:
+                cols:3
+                padding:50
+                spacing:20
+                MDGridLayout:
+                    cols:1
+                    size_hint_x:None
+                    width:350
+                MDGridLayout:
+                    cols:1
+                    halign:'center'
+                    MDRectangleFlatButton:
+                        text:'Add'
+                        font_size:50
+                        on_release:
+                            root.addTeacher()
+
+        MDGridLayout:
+            cols:1
+
+<AddClassRoom>
+    name:'aroom'
+    MDGridLayout:
+        cols:1
+		size: root.width, root.height
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Add Class Room"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+        MDGridLayout:
+            cols:1
+        MDGridLayout:
+            cols:1
+            padding:200
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            size_hint_y: None
+            height: self.minimum_height+200
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:"Room No :"
+                    font_size:25
+                MDTextFieldRect:
+                    id:roomNo
+                    text:''
+                    font_size:25
+
+            MDGridLayout:
+                cols:2
+                MDLabel:
+                    text:"Room Type :"
+                    font_size:25
+                Spinner:
+                    text:''
+                    values:['Class Room','Lab']
+                    font_size:25
+
+            MDGridLayout:
+                cols:3
+                padding:50
+                spacing:20
+                MDGridLayout:
+                    cols:1
+                    size_hint_x:None
+                    width:350
+                MDGridLayout:
+                    cols:1
+                    halign:'center'
+                    MDRectangleFlatButton:
+                        text:'Add'
+                        font_size:50
+                        on_release:
+                            root.addRoom()
+
+        MDGridLayout:
+            cols:1
+
+<ViewTeacherScedule>
+    name: "vtroutine"
+    #container
+    MDBoxLayout:
+	    orientation: "vertical"
+	    size: root.width, root.height
+
+        #header
+        MDGridLayout:
+            cols:3
+            size_hint_y:None
+            height:self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                font_size:32
+                valign:'center'
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "right"
+
+            MDLabel:
+                text: "View Teachers Class Schedule"
+                font_size: 32
+                halign:'center'
+                color:'#ff3333'
+
+            #MDRectangleFlatButton:
+             #   text:''
+              #  font_size:32
+               # on_release:root.download()
+
+        MDGridLayout:
+            cols:7
+            size_hint_y:None
+            height:self.minimum_height
+            Label:
+                text:''
+            Label:
+                text:''
+            MDLabel:
+                text : 'Teacher :'
+                font_size:20
+            Spinner:
+                text:'<select>'
+                id:teacher
+                font_size:20
+                values:root.teacherList()
+                #color:'#fcb0b4'
+                background_color:'#fcb0b4'
+            MDRectangleFlatButton:
+                text:'View'
+                font_size:20
+                on_release:root.view()
+
+            Label:
+                text:''
+            Label:
+                text:''
+
+
+
+
+        #main layout
+        MDGridLayout: #inside Routine
+            cols: 5
+
+            #1
+            MDGridLayout:
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+150
+                MDLabel: #dummy
+                    text: " "
+                    font_size: 10
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel: #sunday label
+                    text: "Sunday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel:#monday label
+                    text: "Monday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Tuesday label
+                    text: "Tuesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Wednesday label
+                    text: "Wednesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel: #Thursday label
+                    text: "Thursday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+            #2
+            MDGridLayout: #before tea break
+                cols:3
+                # 2 --1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.00 - 8.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun11
+                        #halign:'center'
+                        multiline:True
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #disabled:True
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #text_color:'#ac0bc2'
+                        readonly:True
+
+
+                    MDTextFieldRect:
+                        id:tue11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 2-- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.30 - 9.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 2 -- 3
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "9.30 - 10.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+           #end
+
+            # 3
+            MDGridLayout:#after tea break
+                cols:4
+
+                #Tea Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\nT\ne\na\n\n B\nr\ne\na\nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+                # 3 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "10.45 - 11.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                #3 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "11.45 - 12.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                #Launch Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\n\nL\na\nu\nn\nc\nh \n \nB\nr\ne\na \nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+            # 4
+            MDGridLayout: #after launch break
+                cols:3
+                # 4 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing: 5
+                    padding:2.5
+                    MDLabel:
+                        text: "1.45 - 2.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 4 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "2.45 - 3.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 4 -- 3
+                GridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "3.45 - 4.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+            #5
+            MDGridLayout: #dummy to right
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+50
+        #footer layout
+        MDGridLayout:
+            rows:1
+            size_hint_y: None
+            height: self.minimum_height+50
+
+<ViewRoomStatus>
+    name: "vcroutine"
+    #container
+    MDBoxLayout:
+	    orientation: "vertical"
+	    size: root.width, root.height
+
+        #header
+        MDGridLayout:
+            cols:3
+            size_hint_y:None
+            height:self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                font_size:32
+                valign:'center'
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "right"
+
+            MDLabel:
+                text: "View Class Room Status"
+                font_size: 32
+                halign:'center'
+                color:'#ff3333'
+
+            #MDRectangleFlatButton:
+             #   text:''
+              #  font_size:32
+               # on_release:root.download()
+
+        MDGridLayout:
+            cols:7
+            size_hint_y:None
+            height:self.minimum_height
+            Label:
+                text:''
+            Label:
+                text:''
+            MDLabel:
+                text : 'Class Room :'
+                font_size:20
+            Spinner:
+                text:'<select>'
+                id:room
+                font_size:20
+                values:root.roomList()
+                #color:'#fcb0b4'
+                background_color:'#fcb0b4'
+            MDRectangleFlatButton:
+                text:'View'
+                font_size:20
+                on_release:root.view()
+
+            Label:
+                text:''
+            Label:
+                text:''
+
+
+
+
+        #main layout
+        MDGridLayout: #inside Routine
+            cols: 5
+
+            #1
+            MDGridLayout:
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+150
+                MDLabel: #dummy
+                    text: " "
+                    font_size: 10
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel: #sunday label
+                    text: "Sunday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+
+                MDLabel:#monday label
+                    text: "Monday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Tuesday label
+                    text: "Tuesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel:#Wednesday label
+                    text: "Wednesday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+                MDLabel: #Thursday label
+                    text: "Thursday"
+                    font_size: 15
+                    halign:'center'
+                    color:'#ff3333'
+            #2
+            MDGridLayout: #before tea break
+                cols:3
+                # 2 --1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.00 - 8.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun11
+                        #halign:'center'
+                        multiline:True
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #disabled:True
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        #text_color:'#ac0bc2'
+                        readonly:True
+
+
+                    MDTextFieldRect:
+                        id:tue11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues11
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 2-- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "8.30 - 9.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues21
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 2 -- 3
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "9.30 - 10.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues31
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+           #end
+
+            # 3
+            MDGridLayout:#after tea break
+                cols:4
+
+                #Tea Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\nT\ne\na\n\n B\nr\ne\na\nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+                # 3 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "10.45 - 11.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues41
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                #3 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "11.45 - 12.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues51
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.111
+                        readonly:True
+
+                #Launch Break
+                MDGridLayout:
+                    cols:1
+                    size_hint_x: None
+                    width: self.minimum_width+35
+                    MDLabel:
+                        text:"\n\n\nL\na\nu\nn\nc\nh \n \nB\nr\ne\na \nk"
+                        font_size:32
+                        halign:'center'
+                        color:'#12b003'
+
+            # 4
+            MDGridLayout: #after launch break
+                cols:3
+                # 4 -- 1
+                MDGridLayout:
+                    cols:1
+                    spacing: 5
+                    padding:2.5
+                    MDLabel:
+                        text: "1.45 - 2.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues61
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 4 -- 2
+                MDGridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "2.45 - 3.45"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues71
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                # 4 -- 3
+                GridLayout:
+                    cols:1
+                    spacing:5
+                    padding:2.5
+                    MDLabel:
+                        text: "3.45 - 4.30"
+                        font_size: 15
+                        halign:'center'
+                        color:'#ff3333'
+
+                    MDTextFieldRect:
+                        id:sun81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:mon81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tue81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:wed81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+                    MDTextFieldRect:
+                        id:tues81
+                        size_hint: None,None
+                        height: root.height*0.135
+                        width:root.width*0.09
+                        readonly:True
+
+            #5
+            MDGridLayout: #dummy to right
+                cols:1
+                size_hint_x: None
+                width: self.minimum_width+50
+        #footer layout
+        MDGridLayout:
+            rows:1
+            size_hint_y: None
+            height: self.minimum_height+50
+
+<TeachersPanel>
+    name:'teachersP'
+
+    MDBoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Teachers Panel"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+        MDLabel:
+            text:' '
+
+
+        MDGridLayout:
+            cols:2
+            size_hint:0.7,0.5
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            spacing:50
+
+            MDRectangleFlatButton:
+                text:'Schedule Class Test Routine'
+                size_hint_x:0.5
+                font_size:28
+                on_release:
+				    app.root.current = "mctschedule"
+				    root.manager.transition.direction = "right"
+
+			MDRectangleFlatButton:
+                text:'View Scheduled Class Test Routine'
+                size_hint_x:0.5
+                font_size:28
+                on_release:
+                    app.root.current = 'vctschedule'
+                    root.manager.transition.direction = "right"
+
+
+            MDRectangleFlatButton:
+                text:'View Class Routine'
+                size_hint_x:0.5
+                font_size:28
+                on_release:
+                    app.root.current = "selectInfoView"
+			        root.manager.transition.direction = "left"
+
+            MDRectangleFlatButton:
+                text:'View Teacher Schedule'
+                size_hint_x:0.5
+                font_size:32
+                on_release:
+                    app.root.current = 'vtroutine'
+                    root.manager.transition.direction = 'left'
+
+            MDRectangleFlatButton:
+                text:'View Room Status'
+                size_hint_x:0.5
+                font_size:28
+                on_release:
+                    app.root.current = "vcroutine" # mroutine
+			        root.manager.transition.direction = "right"
+
+        MDLabel:
+            text:' '
+
+
+<MakeCTSchedule>
+    name:'mctschedule'
+    MDGridLayout:
+        cols:1
+		size: root.width, root.height
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "Schedule Class Test Routine"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+		MDGridLayout:
+		    cols:3
+		    size_hint_y: None
+            height: self.minimum_height+50
+            padding:100
+            spacing:100
+
+		    MDGridLayout:
+		        cols: 2
+		        MDLabel:
+		            text:'Year :'
+		            font_size:25
+
+		        Spinner:
+		            id:year
+		            text:'<select>'
+		            font_size:25
+		            values: ['1st','2nd','3rd','4th']
+
+		    MDGridLayout:
+		        cols: 2
+		        MDLabel:
+		            text:'Semester :'
+		            font_size:25
+		        Spinner:
+		            id:sem
+		            text:'<select>'
+		            values: ['1st','2nd']
+		            font_size:25
+
+		    MDGridLayout:
+		        cols: 2
+		        MDLabel:
+		            text:'Section :'
+		            font_size:25
+		        Spinner:
+		            id:sec
+		            text:'<select>'
+		            font_size:25
+		            values: ['A','B']
+
+        #content
+		MDGridLayout:
+		    cols:3
+
+		    MDGridLayout:
+		        cols:1
+		    MDGridLayout:
+		        cols:1
+                MDGridLayout:
+                    cols:1
+                    MDGridLayout:
+                        cols:2
+                        MDLabel:
+                            text:'Course Code :'
+                            font_size:25
+                        MDTextFieldRect:
+                            id:code
+                            hint_text:'Course Code'
+                            font_size:25
+                            fill_color: 102, 178, 255, .2
+                            text_color:0,0,0,1
+
+                    MDGridLayout:
+                        cols:2
+                        MDLabel:
+                            text:'Course Title :'
+                            font_size:25
+                        MDTextFieldRect:
+                            id: title
+                            hint_text:'Course Title'
+                            fill_color: 102, 178, 255, .4
+                            font_size:25
+
+                    #date and Time
+                    MDGridLayout:
+                        cols:2
+                        spacing:50
+                        #date
+                        MDGridLayout:
+                            cols:2
+                            MDLabel:
+                                text:'Date :'
+                                font_size:25
+                            MDTextField:
+                                id:date
+                                hint_text: "Pick a date"
+                                font_size:20
+                                readonly:True
+                                mode: "rectangle"
+                                on_double_tap:root.datePicker()
+
+                        #Time
+                        MDGridLayout:
+                            cols:2
+                            MDLabel:
+                                text:'Time :'
+                                font_size:25
+                            MDTextField:
+                                id:time
+                                readonly:True
+                                hint_text: "Pick a Time"
+                                font_size:20
+                                mode: "rectangle"
+                                on_double_tap:root.timePicker()
+            MDGridLayout:
+		        cols:1
+
+		MDGridLayout:
+		    cols:3
+		    MDLabel:
+		        text:''
+		    MDRectangleFlatButton:
+		        text:'Schedule'
+		        font_size:20
+		        on_release:
+		            root.schedule()
+		    MDLabel:
+		        text:''
+		#Dummy
+		Label:
+		    text:''
+
+
+<ViewCTScheduled>
+    name:'vctschedule'
+    MDGridLayout:
+        cols:1
+		size: root.width, root.height
+
+        MDGridLayout:
+            cols:3
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDRectangleFlatButton:
+                text:'Home'
+                #font_size:32
+                on_release:
+				    app.root.current = "main"
+				    root.manager.transition.direction = "left"
+
+            MDLabel:
+                text: "View Scheduled Class Test Routine"
+                font_size: 50
+                halign:'center'
+                color:'#ff3333'
+
+		MDGridLayout:
+		    cols:4
+		    size_hint_y: None
+            height: self.minimum_height+20
+            padding:50
+            spacing:100
+
+		    MDGridLayout:
+		        cols: 2
+		        MDLabel:
+		            text:'Year :'
+		            font_size:25
+
+		        Spinner:
+		            id:year
+		            text:'<select>'
+		            font_size:25
+		            values: ['1st','2nd','3rd','4th']
+
+		    MDGridLayout:
+		        cols: 2
+		        MDLabel:
+		            text:'Semester :'
+		            font_size:25
+		        Spinner:
+		            id:sem
+		            text:'<select>'
+		            font_size:25
+		            values: ['1st','2nd']
+
+		    MDGridLayout:
+		        cols: 2
+		        MDLabel:
+		            text:'Section :'
+		            font_size:25
+		        Spinner:
+		            id:sec
+		            text:'<select>'
+		            values: ['A','B']
+		            font_size:25
+
+		    MDRectangleFlatButton:
+		        text:'View'
+		        font_size:25
+		        on_release:
+		            root.viewRoutine()
+
+		#content
+		MDGridLayout:
+		    cols:1
+		    padding:100
+		    MDTextFieldRect:
+		        id:ctroutine
+		        text: ""
+		        font_size:40
+		        readonly:True
+
+
